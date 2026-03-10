@@ -1,0 +1,29 @@
+report_task:
+  description: >
+    Research and analyze the AI-related topic: {topic}.
+    Identify key patterns, trends, and insights. Cover historical context,
+    current developments, comparisons, and future implications.
+    Use the current year {current_year} for relevance.
+    Produce a structured analytical report suitable for use as input to a blog post.
+  expected_output: >
+    A comprehensive analytical report in markdown (no code fences) covering
+    major trends, insights, and perspectives about the AI topic. Each major
+    point should have clear explanations and supporting context. Format as
+    markdown only, without '```'.
+  agent: report_generator
+
+blog_writing_task:
+  description: >
+    Using the report provided as context, write a full blog post about the
+    AI topic: {topic}. The report contains the research; your job is to turn
+    it into an engaging, reader-friendly blog. Use clear headings, simple
+    language, examples, and a compelling flow. Reflect the latest insights
+    for {current_year}.
+  expected_output: >
+    A complete blog post in markdown (no code fences) with a compelling
+    introduction, clear section headings, explanatory content, examples
+    where appropriate, and a concise conclusion. Easy to read and engaging.
+    Output as markdown only, without '```'.
+  agent: blog_writer
+  context:
+    - report_task
