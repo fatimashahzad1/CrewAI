@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import json
+import logging
 import os
 import re
 import sys
@@ -13,6 +14,13 @@ from dotenv import load_dotenv
 from research_and_blog_crew.crew import ResearchAndBlogCrew
 
 load_dotenv()
+
+# So you can see which researcher tools are active (topic_api, web_search, Tavily)
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(levelname)s] %(message)s",
+)
+logging.getLogger("research_and_blog_crew").setLevel(logging.INFO)
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 
@@ -80,6 +88,12 @@ def run():
         sys.exit(1)
 
     inputs = {"topic": topic, "current_year": str(datetime.now().year)}
+
+    # Show which search backends the researcher uses (no MCP; Tavily = native tool)
+    backends = ["topic_api", "web_search (DuckDuckGo)"]
+    if os.getenv("TAVILY_API_KEY", "").strip():
+        backends.append("tavily_search (Tavily API)")
+    print(f"Researcher tools: {', '.join(backends)}. (MCP is not used.)")
 
     try:
         result = ResearchAndBlogCrew().crew().kickoff(inputs=inputs)
