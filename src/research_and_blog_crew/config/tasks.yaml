@@ -2,7 +2,12 @@ research_task:
   description: >
     Research the AI-related topic: {topic}. Gather key information, trends,
     and perspectives. Use the current year {current_year} for relevance.
-    Produce structured research notes that can be used to write a report.
+    Start by using the topic_api tool with 'get_trending' action to identify
+    what's currently popular and relevant. Then use 'search' to find related
+    topics that should be explored. For any specific topics mentioned, use
+    'get_by_id' to get detailed information. Consider using 'get_all' for
+    a comprehensive overview of the topic landscape. Produce structured
+    research notes that can be used to write a report.
   expected_output: >
     Structured research notes in markdown with clear sections, key findings,
     and sources or angles. Markdown only, no code fences.
@@ -13,7 +18,12 @@ report_task:
     Using the research notes provided as context, synthesize a comprehensive
     analytical report on the AI topic: {topic}. Identify key patterns, trends,
     and insights. Cover historical context, current developments, comparisons,
-    and future implications. Use the current year {current_year}.
+    and future implications. Use the current year {current_year}. Use the
+    topic_api tool strategically: start with 'get_all' to understand the
+    full topic ecosystem, use 'get_by_id' for detailed comparisons with
+    related topics mentioned in research, use 'search' to find comparison or
+    contrasting topics, and use 'get_trending' to highlight current trends
+    that make your report timely.
   expected_output: >
     A comprehensive analytical report in markdown covering major trends,
     insights, and perspectives. Clear explanations and context per point.
@@ -25,8 +35,12 @@ report_task:
 review_task:
   description: >
     Review the report provided as context for the AI topic: {topic}. Check
-    for accuracy, clarity, completeness, and consistency. Suggest or apply
-    improvements. Produce a reviewed and improved version of the report.
+    for accuracy, clarity, completeness, and consistency. Use the topic_api
+    tool to verify information: use 'get_by_id' to verify facts and details
+    about topics mentioned in the report, use 'search' to identify gaps in
+    topic coverage by finding related topics that should be mentioned but
+    aren't. Suggest or apply improvements. Produce a reviewed and improved
+    version of the report.
   expected_output: >
     Reviewed and improved report in markdown; same structure as original
     with corrections and clarifications applied. Markdown only, no code fences.
@@ -39,7 +53,11 @@ blog_writing_task:
     Using the reviewed report provided as context, write a full blog post
     about the AI topic: {topic}. Turn the report into an engaging,
     reader-friendly blog with clear headings, simple language, and a
-    compelling flow. Reflect the latest insights for {current_year}.
+    compelling flow. Reflect the latest insights for {current_year}. Use
+    the topic_api tool to enhance your blog: use 'get_trending' to ensure
+    your blog acknowledges current trends and stays relevant, use 'get_by_id'
+    to add engaging related content sections that keep readers interested,
+    and use 'search' to find topics for "related articles" suggestions.
   expected_output: >
     Complete blog post in markdown: compelling intro, clear headings,
     explanatory content, examples, concise conclusion. Markdown only, no code fences.
@@ -51,7 +69,10 @@ edit_task:
   description: >
     Using the blog draft provided as context, apply final edits for the
     AI topic: {topic}. Polish tone, consistency, and formatting. Ensure
-    the piece is publication-ready and reads smoothly.
+    the piece is publication-ready and reads smoothly. Use the topic_api
+    tool for final verification: use 'get_by_id' to verify correct
+    terminology and definitions for topics mentioned in the blog, and
+    use 'search' to ensure consistent topic naming throughout the piece.
   expected_output: >
     Final publication-ready blog post in markdown. Draft with edits applied:
     improved flow, consistent tone, clean formatting. Markdown only, no code fences.

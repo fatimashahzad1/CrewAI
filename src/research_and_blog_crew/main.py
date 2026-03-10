@@ -7,6 +7,7 @@ import warnings
 from datetime import datetime
 from pathlib import Path
 
+import requests
 from dotenv import load_dotenv
 
 from research_and_blog_crew.crew import ResearchAndBlogCrew
@@ -23,15 +24,59 @@ def _topic_slug(topic: str) -> str:
     return slug or "blog-post"
 
 
+def _get_topic_from_api(source: str = "random") -> str:
+    """Fetch a topic from the Topic API.
+    
+    Args:
+        source: 'random' or 'trending' - determines which endpoint to use
+        
+    Returns:
+        Topic title as string
+        
+    Raises:
+        Exception: If API is unreachable or returns invalid data
+    """
+    api_url = os.getenv("TOPIC_API_URL", "http://localhost:3000")
+    
+    try:
+        if source == "trending":
+            response = requests.get(f"{api_url}/api/topics/trending", timeout=5)
+            response.raise_for_status()
+            data = response.json()
+            topics = data.get("topics", [])
+            if topics:
+                # Return the first trending topic
+                return topics[0].get("title", "AI Technology")
+        else:
+            # Default to random
+            response = requests.get(f"{api_url}/api/topics/random", timeout=5)
+            response.raise_for_status()
+            data = response.json()
+            topic = data.get("topic")
+            if topic:
+                return topic.get("title", "AI Technology")
+        
+        # Fallback if no topic found
+        return "AI Technology"
+    except requests.exceptions.RequestException as e:
+        print(f"Warning: Could not fetch topic from API ({e}). Using default topic.")
+        return "AI Technology"
+
+
 def run():
-    """Run the crew; topic from CLI args or prompt. Writes blog to blog/<slug>.md."""
+    """Run the crew; topic from CLI args, API, or fallback. Writes blog to blog/<slug>.md."""
     if len(sys.argv) > 1:
+        # Allow manual topic override via CLI args
         topic = " ".join(sys.argv[1:]).strip()
+        print(f"Using provided topic: {topic}")
     else:
-        topic = input("Enter an AI-related topic for the report and blog: ").strip()
+        # Automatically fetch topic from API
+        print("Fetching topic from API...")
+        topic = _get_topic_from_api(source="random")
+        print(f"Selected topic: {topic}")
 
     if not topic:
-        print("Error: Topic is required. Pass it as an argument or enter when prompted.")
+        print("Error: Could not determine topic.")
         sys.exit(1)
 
     inputs = {"topic": topic, "current_year": str(datetime.now().year)}
