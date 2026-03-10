@@ -1,29 +1,60 @@
+research_task:
+  description: >
+    Research the AI-related topic: {topic}. Gather key information, trends,
+    and perspectives. Use the current year {current_year} for relevance.
+    Produce structured research notes that can be used to write a report.
+  expected_output: >
+    Structured research notes in markdown with clear sections, key findings,
+    and sources or angles. Markdown only, no code fences.
+  agent: researcher
+
 report_task:
   description: >
-    Research and analyze the AI-related topic: {topic}.
-    Identify key patterns, trends, and insights. Cover historical context,
-    current developments, comparisons, and future implications.
-    Use the current year {current_year} for relevance.
-    Produce a structured analytical report suitable for use as input to a blog post.
+    Using the research notes provided as context, synthesize a comprehensive
+    analytical report on the AI topic: {topic}. Identify key patterns, trends,
+    and insights. Cover historical context, current developments, comparisons,
+    and future implications. Use the current year {current_year}.
   expected_output: >
-    A comprehensive analytical report in markdown (no code fences) covering
-    major trends, insights, and perspectives about the AI topic. Each major
-    point should have clear explanations and supporting context. Format as
-    markdown only, without '```'.
+    A comprehensive analytical report in markdown covering major trends,
+    insights, and perspectives. Clear explanations and context per point.
+    Markdown only, no code fences.
   agent: report_generator
+  context:
+    - research_task
+
+review_task:
+  description: >
+    Review the report provided as context for the AI topic: {topic}. Check
+    for accuracy, clarity, completeness, and consistency. Suggest or apply
+    improvements. Produce a reviewed and improved version of the report.
+  expected_output: >
+    Reviewed and improved report in markdown; same structure as original
+    with corrections and clarifications applied. Markdown only, no code fences.
+  agent: reviewer
+  context:
+    - report_task
 
 blog_writing_task:
   description: >
-    Using the report provided as context, write a full blog post about the
-    AI topic: {topic}. The report contains the research; your job is to turn
-    it into an engaging, reader-friendly blog. Use clear headings, simple
-    language, examples, and a compelling flow. Reflect the latest insights
-    for {current_year}.
+    Using the reviewed report provided as context, write a full blog post
+    about the AI topic: {topic}. Turn the report into an engaging,
+    reader-friendly blog with clear headings, simple language, and a
+    compelling flow. Reflect the latest insights for {current_year}.
   expected_output: >
-    A complete blog post in markdown (no code fences) with a compelling
-    introduction, clear section headings, explanatory content, examples
-    where appropriate, and a concise conclusion. Easy to read and engaging.
-    Output as markdown only, without '```'.
+    Complete blog post in markdown: compelling intro, clear headings,
+    explanatory content, examples, concise conclusion. Markdown only, no code fences.
   agent: blog_writer
   context:
-    - report_task
+    - review_task
+
+edit_task:
+  description: >
+    Using the blog draft provided as context, apply final edits for the
+    AI topic: {topic}. Polish tone, consistency, and formatting. Ensure
+    the piece is publication-ready and reads smoothly.
+  expected_output: >
+    Final publication-ready blog post in markdown. Draft with edits applied:
+    improved flow, consistent tone, clean formatting. Markdown only, no code fences.
+  agent: editor
+  context:
+    - blog_writing_task

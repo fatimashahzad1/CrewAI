@@ -111,7 +111,7 @@ my_crew/
 │   ├── crew.py               # Crew orchestration class
 │   └── main.py               # Entry point with inputs
 ├── knowledge/                 # Knowledge base resources
-├── .env                       # API keys (OPENAI_API_KEY, SERPER_API_KEY, etc.)
+├── .env                       # API keys (GEMINI_API_KEY, SERPER_API_KEY, etc.)
 └── pyproject.toml
 ```
 
@@ -391,7 +391,7 @@ agent = Agent(llm=llm, ...)
 
 Supported providers: OpenAI, Anthropic, Google Gemini, AWS Bedrock, Azure, Ollama, Groq, Mistral, and 20+ others via LiteLLM routing.
 
-Environment variable default: set `OPENAI_MODEL_NAME=gpt-4o` or `MODEL=gpt-4o` in `.env`.
+Environment variable default: set `MODEL=gemini/gemini-2.0-flash` (or another Gemini model) and `GEMINI_API_KEY` in `.env` for Gemini; or `MODEL=gpt-4o` and `OPENAI_API_KEY` for OpenAI.
 
 ## Task Configuration
 
@@ -967,12 +967,14 @@ jobs:
 
 ### Required `.env`
 ```
-OPENAI_API_KEY=sk-...
+# For Gemini (used by this crew):
+GEMINI_API_KEY=...
+MODEL=gemini/gemini-2.0-flash
+
 # Optional depending on tools/providers:
 SERPER_API_KEY=...
 ANTHROPIC_API_KEY=...
-# Override default model:
-MODEL=gpt-4o
+# For OpenAI instead: OPENAI_API_KEY=sk-... and MODEL=gpt-4o
 ```
 
 ### Python Version
