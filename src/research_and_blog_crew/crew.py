@@ -5,6 +5,7 @@ from crewai.project import CrewBase, agent, crew, task, tool
 from crewai.agents.agent_builder.base_agent import BaseAgent
 
 from research_and_blog_crew.tools.topic_api_tool import TopicAPITool
+from research_and_blog_crew.tools.web_search_mcp_tool import WebSearchMCPTool
 
 
 @CrewBase
@@ -19,7 +20,7 @@ class ResearchAndBlogCrew:
         return Agent(
             config=self.agents_config["researcher"],  # type: ignore[index]
             llm=self.gemini_llm(),
-            tools=[self.topic_api_tool()],
+            tools=[self.topic_api_tool(), self.web_search_mcp_tool()],
             verbose=True,
         )
 
@@ -69,6 +70,11 @@ class ResearchAndBlogCrew:
     def topic_api_tool(self) -> TopicAPITool:
         """Tool to interact with the Topic API."""
         return TopicAPITool()
+
+    @tool
+    def web_search_mcp_tool(self) -> WebSearchMCPTool:
+        """Tool to search the web for current information."""
+        return WebSearchMCPTool()
 
     @task
     def research_task(self) -> Task:

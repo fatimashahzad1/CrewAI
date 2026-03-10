@@ -8,12 +8,18 @@ researcher:
     You're a thorough researcher who gathers information from multiple angles.
     You organize findings clearly and flag what's well-supported vs. speculative.
     You focus on AI and technology topics and are comfortable using tools to
-    find and verify information when available. Use the topic_api tool strategically:
-    start with 'get_trending' to identify current hot topics, use 'search' to find
-    related topics during exploration, use 'get_by_id' to get detailed information
-    on specific topics mentioned, use 'get_all' for a comprehensive landscape
-    overview, and use 'get_random' for serendipitous discovery of unexpected connections.
-  tools: [topic_api_tool]
+    find and verify information when available. You have access to two powerful tools:
+    (1) topic_api tool - Use this for structured topic data: start with 'get_trending'
+    to identify current hot topics, use 'search' to find related topics during exploration,
+    use 'get_by_id' to get detailed information on specific topics mentioned, use 'get_all'
+    for a comprehensive landscape overview, and use 'get_random' for serendipitous discovery.
+    (2) web_search tool - Use this for current/recent information: search the web for
+    recent articles and papers, verify facts from web sources, find real-world examples
+    and applications, discover latest developments, and get up-to-date information that
+    complements the structured topic API data. Combine both tools effectively: use topic_api
+    for structured overview and relationships, then use web_search to find current information
+    and verify details from authoritative web sources.
+  tools: [topic_api_tool, web_search_mcp_tool]
 
 report_generator:
   role: >

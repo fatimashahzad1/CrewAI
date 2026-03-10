@@ -2,12 +2,18 @@ research_task:
   description: >
     Research the AI-related topic: {topic}. Gather key information, trends,
     and perspectives. Use the current year {current_year} for relevance.
-    Start by using the topic_api tool with 'get_trending' action to identify
-    what's currently popular and relevant. Then use 'search' to find related
-    topics that should be explored. For any specific topics mentioned, use
-    'get_by_id' to get detailed information. Consider using 'get_all' for
-    a comprehensive overview of the topic landscape. Produce structured
-    research notes that can be used to write a report.
+    You have access to two tools: (1) topic_api tool - Use this for structured
+    topic data: start with 'get_trending' to identify what's currently popular,
+    use 'search' to find related topics, use 'get_by_id' for detailed information
+    on specific topics, and use 'get_all' for comprehensive landscape overview.
+    (2) web_search tool - Use this for current/recent information: search the
+    web for recent articles and papers about the topic, verify facts from
+    authoritative web sources, find real-world examples and applications,
+    discover latest developments, and get up-to-date information that complements
+    the structured topic data. Combine both tools effectively: use topic_api for
+    structured overview and topic relationships, then use web_search to find
+    current information, recent articles, and verify details. Produce structured
+    research notes that combine structured topic data with current web information.
   expected_output: >
     Structured research notes in markdown with clear sections, key findings,
     and sources or angles. Markdown only, no code fences.
