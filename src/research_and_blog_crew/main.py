@@ -89,11 +89,11 @@ def run():
 
     inputs = {"topic": topic, "current_year": str(datetime.now().year)}
 
-    # Show which search backends the researcher uses (no MCP; Tavily = native tool)
-    backends = ["topic_api", "web_search (DuckDuckGo)"]
+    # Topic data: Topic MCP (NestJS stdio). Web: DuckDuckGo + optional Tavily.
+    backends = ["Topic MCP (get_all_topics, get_topic_by_id, get_trending_topics, get_random_topic, search_topics)", "web_search (DuckDuckGo)"]
     if os.getenv("TAVILY_API_KEY", "").strip():
         backends.append("tavily_search (Tavily API)")
-    print(f"Researcher tools: {', '.join(backends)}. (MCP is not used.)")
+    print(f"Researcher tools: {', '.join(backends)}.")
 
     try:
         result = ResearchAndBlogCrew().crew().kickoff(inputs=inputs)
